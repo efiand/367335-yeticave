@@ -1,7 +1,7 @@
 # Личный проект «YetiCave» 
 
 * Студент: [Андрей Ефимов](https://up.htmlacademy.ru/php/3/user/367335).
-* Наставник: `Неизвестно`.
+* Наставник: [Сергей Зубов](https://htmlacademy.ru/profile/serj).
 
 ---
 
