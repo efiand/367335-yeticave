@@ -16,8 +16,20 @@ $tomorrow = strtotime('tomorrow midnight');
 // временная метка для настоящего времени
 $now = strtotime('now');
 
-// далее нужно вычислить оставшееся время до начала следующих суток и записать его в переменную $lot_time_remaining
-$lot_time_remaining = gmdate("H:i:s", $tomorrow - $now);
+// временная метка оставшегося до полуночи времени
+$lot_time_remaining__ts = $tomorrow - $now;
+
+// оставшееся время в часах
+$lot_time_remaining__hours = floor($lot_time_remaining__ts / 3600);
+
+// временная метка для минут неполного часа
+$lot_time_remaining__min_ts = $lot_time_remaining__ts - $lot_time_remaining__hours * 3600;
+
+// число минут неполного часа
+$lot_time_remaining__min = floor($lot_time_remaining__min_ts / 60);
+
+// оставшееся время в формате ЧЧ:ММ
+$lot_time_remaining = sprintf('%02d:%02d', $lot_time_remaining__hours, $lot_time_remaining__min);
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -42,7 +54,7 @@ $lot_time_remaining = gmdate("H:i:s", $tomorrow - $now);
             <a class="main-header__add-lot button" href="add-lot.html">Добавить лот</a>
 
             <nav class="user-menu">
-                <?php if ($is_auth === true) : ?>
+                <?php if ($is_auth == true) : ?>
                     <div class="user-menu__image">
                         <img src="<?=$user_avatar?>" width="40" height="40" alt="Пользователь">
                     </div>
