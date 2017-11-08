@@ -54,7 +54,7 @@ $lot_time_remaining = sprintf('%02d:%02d', $lot_time_remaining__hours, $lot_time
             <a class="main-header__add-lot button" href="add-lot.html">Добавить лот</a>
 
             <nav class="user-menu">
-                <?php if ($is_auth === true) : ?>
+                <?php if ($is_auth == true) : ?>
                     <div class="user-menu__image">
                         <img src="<?=$user_avatar?>" width="40" height="40" alt="Пользователь">
                     </div>
