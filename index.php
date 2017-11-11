@@ -30,6 +30,56 @@ $lot_time_remaining__min = floor($lot_time_remaining__min_ts / 60);
 
 // оставшееся время в формате ЧЧ:ММ
 $lot_time_remaining = sprintf('%02d:%02d', $lot_time_remaining__hours, $lot_time_remaining__min);
+
+// Массив категорий
+$categories_list = [
+    'boards' => 'Доски и лыжи',
+    'attachment' => 'Крепления',
+    'boots' => 'Ботинки',
+    'clothing' => 'Одежда',
+    'tools' => 'Инструменты',
+    'other' => 'Разное'
+];
+
+// Массив объявлений
+$announcements_list = [
+    [
+        'name' => '2014 Rossignol District Snowboard',
+        'category' => 'boards',
+        'price' => 10999,
+        'picture' => 'img/lot-1.jpg'
+    ],
+    [
+        'name' => 'DC Ply Mens 2016/2017 Snowboard',
+        'category' => 'boards',
+        'price' => 159999,
+        'picture' => 'img/lot-2.jpg'
+    ],
+    [
+        'name' => 'Крепления Union Contact Pro 2015 года размер L/XL',
+        'category' => 'attachment',
+        'price' => 8000,
+        'picture' => 'img/lot-3.jpg'
+    ],
+    [
+        'name' => 'Ботинки для сноуборда DC Mutiny Charocal',
+        'category' => 'boots',
+        'price' => 10999,
+        'picture' => 'img/lot-4.jpg'
+    ],
+    [
+        'name' => 'Куртка для сноуборда DC Mutiny Charocal',
+        'category' => 'clothing',
+        'price' => 7500,
+        'picture' => 'img/lot-5.jpg'
+    ],
+    [
+        'name' => 'Маска Oakley Canopy',
+        'category' => 'other',
+        'price' => 5400,
+        'picture' => 'img/lot-6.jpg'
+    ]
+];
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -53,24 +103,24 @@ $lot_time_remaining = sprintf('%02d:%02d', $lot_time_remaining__hours, $lot_time
             </form>
             <a class="main-header__add-lot button" href="add-lot.html">Добавить лот</a>
 
-            <nav class="user-menu">
-                <?php if ($is_auth == true) : ?>
-                    <div class="user-menu__image">
-                        <img src="<?=$user_avatar?>" width="40" height="40" alt="Пользователь">
-                    </div>
-                    <div class="user-menu__logged">
-                        <p><?=$user_name?></p>
-                    </div>
-                <?php else : ?>
-                    <ul class="user-menu__list">
-                        <li class="user-menu__item">
-                            <a href="#">Регистрация</a>
-                        </li>
-                        <li class="user-menu__item">
-                            <a href="#">Вход</a>
-                        </li>
-                    </ul>
-                <?php endif; ?>
+            <nav class="user-menu"><?php if ($is_auth == true) : ?>
+
+                <div class="user-menu__image">
+                    <img src="<?=$user_avatar?>" width="40" height="40" alt="Пользователь">
+                </div>
+                <div class="user-menu__logged">
+                    <p><?=$user_name?></p>
+                </div><?php else : ?>
+
+                <ul class="user-menu__list">
+                    <li class="user-menu__item">
+                        <a href="#">Регистрация</a>
+                    </li>
+                    <li class="user-menu__item">
+                        <a href="#">Вход</a>
+                    </li>
+                </ul><?php endif; ?>
+
             </nav>
         </div>
     </header>
@@ -79,75 +129,49 @@ $lot_time_remaining = sprintf('%02d:%02d', $lot_time_remaining__hours, $lot_time
         <section class="promo">
             <h2 class="promo__title">Нужен стафф для катки?</h2>
             <p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и горнолыжное снаряжение.</p>
-            <ul class="promo__list">
-                <li class="promo__item promo__item--boards">
-                    <a class="promo__link" href="all-lots.html">Доски и лыжи</a>
-                </li>
-                <li class="promo__item promo__item--attachment">
-                    <a class="promo__link" href="all-lots.html">Крепления</a>
-                </li>
-                <li class="promo__item promo__item--boots">
-                    <a class="promo__link" href="all-lots.html">Ботинки</a>
-                </li>
-                <li class="promo__item promo__item--clothing">
-                    <a class="promo__link" href="all-lots.html">Одежда</a>
-                </li>
-                <li class="promo__item promo__item--tools">
-                    <a class="promo__link" href="all-lots.html">Инструменты</a>
-                </li>
-                <li class="promo__item promo__item--other">
-                    <a class="promo__link" href="all-lots.html">Разное</a>
-                </li>
+            <ul class="promo__list"><?php foreach ($categories_list as $k => $val) : ?>
+
+                <li class="promo__item promo__item--<?=$k?>">
+                    <a class="promo__link" href="all-lots.html"><?=$val?></a>
+                </li><?php endforeach; ?>
+
             </ul>
         </section>
         <section class="lots">
             <div class="lots__header">
                 <h2>Открытые лоты</h2>
             </div>
-            <ul class="lots__list">
+            <ul class="lots__list"><?php foreach ($announcements_list as $k => $val) : ?>
+
                 <li class="lots__item lot">
                     <div class="lot__image">
-                        <img src="img/lot-1.jpg" width="350" height="260" alt="Сноуборд">
+                        <img src="img/lot-<?=($k + 1)?>.jpg" width="350" height="260" alt="<?=$val['name']?>">
                     </div>
                     <div class="lot__info">
-                        <span class="lot__category">Доски и лыжи</span>
-                        <h3 class="lot__title"><a class="text-link" href="lot.html">2014 Rossignol District Snowboard</a></h3>
+                        <span class="lot__category"><?=$categories_list[$val['category']]?></span>
+                        <h3 class="lot__title"><a class="text-link" href="lot.html"><?=$val['name']?></a></h3>
                         <div class="lot__state">
                             <div class="lot__rate">
                                 <span class="lot__amount">Стартовая цена</span>
-                                <span class="lot__cost">10 999<b class="rub">р</b></span>
+                                <span class="lot__cost"><?=$val['price']?><b class="rub">р</b></span>
                             </div>
-                            <div class="lot__timer timer">
-                                <?=$lot_time_remaining;?>
-                            </div>
+                            <div class="lot__timer timer"><?=$lot_time_remaining;?></div>
                         </div>
                     </div>
-                </li>
+                </li><?php endforeach; ?>
+
             </ul>
         </section>
     </main>
 
     <footer class="main-footer">
         <nav class="nav">
-            <ul class="nav__list container">
+            <ul class="nav__list container"><?php foreach ($categories_list as $val) : ?>
+
                 <li class="nav__item">
-                    <a href="all-lots.html">Доски и лыжи</a>
-                </li>
-                <li class="nav__item">
-                    <a href="all-lots.html">Крепления</a>
-                </li>
-                <li class="nav__item">
-                    <a href="all-lots.html">Ботинки</a>
-                </li>
-                <li class="nav__item">
-                    <a href="all-lots.html">Одежда</a>
-                </li>
-                <li class="nav__item">
-                    <a href="all-lots.html">Инструменты</a>
-                </li>
-                <li class="nav__item">
-                    <a href="all-lots.html">Разное</a>
-                </li>
+                    <a href="all-lots.html"><?=$val?></a>
+                </li><?php endforeach; ?>
+
             </ul>
         </nav>
         <div class="main-footer__bottom container">
@@ -159,12 +183,12 @@ $lot_time_remaining = sprintf('%02d:%02d', $lot_time_remaining__hours, $lot_time
                 <span class="visually-hidden">Мы в соцсетях:</span>
                 <a class="social__link social__link--facebook" href="#">Facebook
                     <svg width="27" height="27" viewBox="0 0 27 27" xmlns="http://www.w3.org/2000/svg"><circle stroke="#879296" fill="none" cx="13.5" cy="13.5" r="12.667"/><path fill="#879296" d="M14.26 20.983h-2.816v-6.626H10.04v-2.28h1.404v-1.364c0-1.862.79-2.922 3.04-2.922h1.87v2.28h-1.17c-.876 0-.972.322-.972.916v1.14h2.212l-.245 2.28h-1.92v6.625z"/></svg>
-                </a><span class="visually-hidden">
-                ,</span>
+                </a>
+                <span class="visually-hidden">,</span>
                 <a class="social__link social__link--twitter" href="#">Twitter
                     <svg width="27" height="27" viewBox="0 0 27 27" xmlns="http://www.w3.org/2000/svg"><circle stroke="#879296" fill="none" cx="13.5" cy="13.5" r="12.687"/><path fill="#879296" d="M18.38 10.572c.525-.336.913-.848 1.092-1.445-.485.305-1.02.52-1.58.635-.458-.525-1.12-.827-1.816-.83-1.388.063-2.473 1.226-2.44 2.615-.002.2.02.4.06.596-2.017-.144-3.87-1.16-5.076-2.78-.22.403-.335.856-.332 1.315-.01.865.403 1.68 1.104 2.188-.397-.016-.782-.13-1.123-.333-.03 1.207.78 2.272 1.95 2.567-.21.06-.43.09-.653.088-.155.015-.313.015-.47 0 .3 1.045 1.238 1.777 2.324 1.815-.864.724-1.956 1.12-3.083 1.122-.198.013-.397.013-.595 0 1.12.767 2.447 1.18 3.805 1.182 4.57 0 7.066-3.992 7.066-7.456v-.34c.49-.375.912-.835 1.24-1.357-.465.218-.963.36-1.473.42z"/></svg>
-                </a><span class="visually-hidden">
-                ,</span>
+                </a>
+                <span class="visually-hidden">,</span>
                 <a class="social__link social__link--instagram" href="#">Instagram
                     <svg width="27" height="27" viewBox="0 0 27 27" xmlns="http://www.w3.org/2000/svg"><circle stroke="#879296" fill="none" cx="13.5" cy="13.5" r="12.687"/><path fill="#879296" d="M13.5 8.3h2.567c.403.002.803.075 1.18.213.552.213.988.65 1.2 1.2.14.38.213.778.216 1.18v5.136c-.003.403-.076.803-.215 1.18-.213.552-.65.988-1.2 1.2-.378.14-.778.213-1.18.216h-5.135c-.403-.003-.802-.076-1.18-.215-.552-.214-.988-.65-1.2-1.2-.14-.38-.212-.78-.215-1.182V13.46v-2.566c.003-.403.076-.802.214-1.18.213-.552.65-.988 1.2-1.2.38-.14.778-.212 1.18-.215H13.5m0-1.143h-2.616c-.526.01-1.048.108-1.54.292-.853.33-1.527 1-1.856 1.854-.184.493-.283 1.014-.292 1.542v5.232c.01.526.108 1.048.292 1.54.33.853 1.003 1.527 1.855 1.856.493.184 1.015.283 1.54.293H16.117c.527-.01 1.048-.11 1.54-.293.854-.33 1.527-1.003 1.856-1.855.184-.493.283-1.015.293-1.54V13.46v-2.614c-.01-.528-.11-1.05-.293-1.542-.33-.853-1.002-1.525-1.855-1.855-.493-.185-1.014-.283-1.54-.293-.665.01-.89 0-2.617 0zm0 3.093c-2.51.007-4.07 2.73-2.808 4.898 1.26 2.17 4.398 2.16 5.645-.017.285-.495.434-1.058.433-1.63-.006-1.8-1.47-3.256-3.27-3.25zm0 5.378c-1.63-.007-2.64-1.777-1.82-3.185.823-1.41 2.86-1.4 3.67.017.18.316.276.675.278 1.04.006 1.177-.95 2.133-2.128 2.128zm4.118-5.524c0 .58-.626.94-1.127.65-.5-.29-.5-1.012 0-1.3.116-.067.245-.102.378-.102.418-.005.76.333.76.752z"/></svg>
                 </a>
