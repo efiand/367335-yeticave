@@ -7,6 +7,21 @@ $bets = [
     ['name' => 'Евгений', 'price' => 10500, 'ts' => strtotime('-' . rand(25, 50) .' hour')],
     ['name' => 'Семён', 'price' => 10000, 'ts' => strtotime('last week')]
 ];
+
+// функция для представления времени в относительном формате
+function time_relative($ts) {
+    $time_diff = $_SERVER['REQUEST_TIME'] - $ts; // разница текущего и переданного времени
+    if ($time_diff > 86400) { // разница более суток
+        $time_return = date('d.m.Y в H:i', $ts);
+    }
+    else if ($time_diff > 3600) { // разница от часа до суток
+        $time_return = date('G', $ts) . ' часов назад';
+    }
+    else { // разница менее часа
+        $time_return = intval(date('i', $ts)) . ' минут назад';
+    }
+    return $time_return;
+}
 ?>
 
 <!DOCTYPE html>
@@ -110,12 +125,14 @@ $bets = [
                 <div class="history">
                     <h3>История ставок (<span>4</span>)</h3>
                     <!-- заполните эту таблицу данными из массива $bets-->
-                    <table class="history__list">
+                    <table class="history__list"><?php foreach ($bets as $val) : ?>
+
                         <tr class="history__item">
-                            <td class="history__name"><!-- имя автора--></td>
-                            <td class="history__price"><!-- цена--> р</td>
-                            <td class="history__time"><!-- дата в человеческом формате--></td>
-                        </tr>
+                            <td class="history__name"><?= $val['name']; ?></td>
+                            <td class="history__price"><?= $val['price']; ?> р</td>
+                            <td class="history__time"><?= time_relative($val['ts']); ?></td>
+                        </tr><?php endforeach; ?>
+
                     </table>
                 </div>
             </div>
