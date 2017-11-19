@@ -6,6 +6,7 @@ date_default_timezone_set('Europe/Moscow');
 require 'functions.php';
 
 // подключаем данные
+require 'data_lots.php';
 require 'data.php';
 
 // записать в эту переменную оставшееся время в этом формате (ЧЧ:ММ)
