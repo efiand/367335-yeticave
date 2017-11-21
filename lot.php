@@ -1,4 +1,13 @@
 <?php
+// подключаем данные лотов
+require 'data_lots.php';
+
+// получаем идентификатор лота
+$id = $_GET['id'];
+if (!$lots_list[$id]) {
+    header($_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found');
+    exit;
+}
 
 // ставки пользователей, которыми надо заполнить таблицу
 $bets = [
@@ -28,7 +37,7 @@ function time_relative($ts) {
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>DC Ply Mens 2016/2017 Snowboard</title>
+    <title><?= $lots_list[$id]['name'] ?></title>
     <link href="css/normalize.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 </head>
@@ -37,7 +46,7 @@ function time_relative($ts) {
 <header class="main-header">
     <div class="main-header__container container">
         <h1 class="visually-hidden">YetiCave</h1>
-        <a class="main-header__logo" href="index.html">
+        <a class="main-header__logo" href="index.php">
             <img src="img/logo.svg" width="160" height="39" alt="Логотип компании YetiCave">
         </a>
         <form class="main-header__search" method="get" action="https://echo.htmlacademy.ru">
@@ -82,13 +91,13 @@ function time_relative($ts) {
         </ul>
     </nav>
     <section class="lot-item container">
-        <h2>DC Ply Mens 2016/2017 Snowboard</h2>
+        <h2><?= $lots_list[$id]['name'] ?></h2>
         <div class="lot-item__content">
             <div class="lot-item__left">
                 <div class="lot-item__image">
-                    <img src="img/lot-image.jpg" width="730" height="548" alt="Сноуборд">
+                    <img src="<?= $lots_list[$id]['picture'] ?>" width="730" height="548" alt="<?= $lots_list[$id]['name'] ?>">
                 </div>
-                <p class="lot-item__category">Категория: <span>Доски и лыжи</span></p>
+                <p class="lot-item__category">Категория: <span><?= $categories_list[$lots_list[$id]['category']] ?></span></p>
                 <p class="lot-item__description">Легкий маневренный сноуборд, готовый дать жару в любом парке, растопив
                     снег
                     мощным щелчкоми четкими дугами. Стекловолокно Bi-Ax, уложенное в двух направлениях, наделяет этот
