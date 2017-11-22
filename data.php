@@ -1,11 +1,18 @@
 <?php
+// устанавливаем часовой пояс в Московское время
+date_default_timezone_set('Europe/Moscow');
+
+// подключаем данные лотов
+require 'data_lots.php';
+
 // общие данные сайта
 $layout_data = [
     'title' => 'Главная',
     'user_name' => 'Константин',
     'user_avatar' => 'img/user.jpg',
     'categories_list' => $categories_list,
-    'is_auth' => (bool) rand(0, 1)
+    'is_auth' => (bool) rand(0, 1),
+    'index_link' => 'href="/" '
 ];
 
 // данные главной страницы

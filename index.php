@@ -1,13 +1,11 @@
 <?php
-// устанавливаем часовой пояс в Московское время
-date_default_timezone_set('Europe/Moscow');
 
 // подключаем библиотеку функций
 require 'functions.php';
 
 // подключаем данные
-require 'data_lots.php';
 require 'data.php';
+
 
 // записать в эту переменную оставшееся время в этом формате (ЧЧ:ММ)
 $lot_time_remaining = "00:00";
@@ -41,6 +39,7 @@ $index_data['lot_time_remaining'] = $lot_time_remaining;
 $layout_data['content'] = include_template('index', $index_data);
 
 // получаем итоговый HTML-код
+$layout_data['index_link'] = '';
 $layout = include_template('layout', $layout_data);
 
 print ($layout);
