@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 // шаблонизатор
 function include_template($template_name, $data) {
     $template_file = 'templates/' . $template_name . '.php';
