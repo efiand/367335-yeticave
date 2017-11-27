@@ -2,6 +2,13 @@
 // подключаем библиотеку функций
 require 'functions.php';
 
+
+// запрет для незарегистрированный
+if (!isset($_SESSION['name'])) {
+    http_response_code(403);
+    exit();
+}
+
 // подключаем данные
 require 'data.php';
 $layout_data['title'] = 'Добавление лота';
@@ -12,7 +19,6 @@ $fields = [
     'lot-rate' => 'Введите начальную цену',
     'lot-step' => 'Введите шаг ставки',
     'lot-date' => 'Введите дату завершения торгов'
-
 ];
 
 

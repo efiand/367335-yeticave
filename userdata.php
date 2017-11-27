@@ -5,7 +5,7 @@ $users = [
     [
         'email' => 'ignat.v@gmail.com',
         'name' => 'Игнат',
-        'password' => '$2y$10$OqvsKHQwr0Wk6FMZDoHo1uHoXd4UdxJG/5UDtUiie00XaxMHrW8ka'
+        'password' => '$2y$10$OqvsKHQwr0Wk6FMZDoHo1uHoXd4UdxJG/5UDtUiie00XaxMHrW8ka'	
     ],
     [
         'email' => 'kitty_93@li.ru',

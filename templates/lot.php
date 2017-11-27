@@ -11,7 +11,8 @@
                     <p class="lot-item__category">Категория: <span><?= $data['categories_list'][$data['lots_list'][$data['id']]['category']] ?></span></p>
                     <p class="lot-item__description"><?= $data['lots_list'][$data['id']]['description'] ?></p>
                 </div>
-                <div class="lot-item__right">
+                <div class="lot-item__right"><?php if ($_SESSION['name']) : ?>
+
                     <div class="lot-item__state">
                         <div class="lot-item__timer timer">
                             <?= remaining($data['expire']); ?>
@@ -34,7 +35,7 @@
                             <button type="submit" class="button">Сделать ставку</button>
                         </form><?php endif; ?>
 
-                    </div><?php if ($data['real']) : ?>
+                    </div><?php endif; if ($data['real']) : ?>
 
                     <div class="history">
                         <h3>История ставок (<span>4</span>)</h3>
