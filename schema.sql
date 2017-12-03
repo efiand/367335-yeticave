@@ -45,7 +45,7 @@ id SMALLINT AUTO_INCREMENT PRIMARY KEY,
 name CHAR(64),
 email CHAR(64),
 password_hash CHAR(60),
-contacts CHAR,
+contacts CHAR(255),
 registration_ts INT,
 img	CHAR(128)
 );
