@@ -1,6 +1,10 @@
 <?php
-// устанавливаем часовой пояс в Московское время
+// настройки даты и времени
 date_default_timezone_set('Europe/Moscow');
+$time = $_SERVER['REQUEST_TIME'];
+$expires = $time + 60*60*24*30;
+
+$name = $_SESSION['name'];
 
 // подключаем данные лотов
 require 'data_lots.php';

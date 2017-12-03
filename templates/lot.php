@@ -2,7 +2,7 @@
         <section class="lot-item container">
             <h2><?= $data['lots_list'][$data['id']]['name'] ?></h2>
             <div class="lot-item__content">
-                <div class="lot-item__left"><?php if ($data['img']) : ?>
+                <div class="lot-item__left"><?php if ($data['lots_list'][$data['id']]['picture']) : ?>
 
                     <div class="lot-item__image">
                         <img src="<?= $data['lots_list'][$data['id']]['picture'] ?>" width="730" height="548" alt="<?= $data['lots_list'][$data['id']]['name'] ?>">
@@ -25,12 +25,13 @@
                             <div class="lot-item__min-cost">
                                 Мин. ставка <span><?= $data['bet_min']; ?> р</span>
                             </div>
-                        </div><?php if ($data['real']) : ?>
+                        </div><?php if ($data['real'] && $data['empty']) : ?>
 
-                        <form class="lot-item__form" action="https://echo.htmlacademy.ru" method="post">
+                        <form class="lot-item__form" action="lot.php?id=<?= $data['id']; ?>" method="post">
                             <p class="lot-item__form-item">
                                 <label for="cost">Ваша ставка</label>
                                 <input id="cost" type="number" name="cost" placeholder="<?= $data['bet_min']; ?>">
+                                <input type="hidden" name="cost-min" value="<?= $data['bet_min']; ?>">
                             </p>
                             <button type="submit" class="button">Сделать ставку</button>
                         </form><?php endif; ?>
