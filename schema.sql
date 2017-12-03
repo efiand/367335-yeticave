@@ -1,4 +1,3 @@
-DROP DATABASE yeticave;
 CREATE DATABASE IF NOT EXISTS yeticave;
 USE yeticave;
 
@@ -24,6 +23,8 @@ winner_id SMALLINT
 CREATE UNIQUE INDEX id ON lots(id);
 CREATE INDEX price ON lots(price);
 CREATE INDEX step ON lots(step);
+CREATE INDEX create_ts ON lots(create_ts);
+CREATE INDEX expire_ts ON lots(expire_ts);
 CREATE INDEX category_id ON lots(category_id);
 CREATE INDEX user_id ON lots(user_id);
 CREATE INDEX winner_id ON lots(winner_id);
