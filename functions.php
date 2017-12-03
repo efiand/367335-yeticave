@@ -17,15 +17,16 @@ function include_template($template_name, $data) {
 
 // функция для представления времени в относительном формате
 function time_relative($ts) {
-    $time_diff = $_SERVER['REQUEST_TIME'] - $ts; // разница текущего и переданного времени
+    $time = $_SERVER['REQUEST_TIME'];
+    $time_diff = $time - $ts; // разница текущего и переданного времени
     if ($time_diff > 86400) { // разница более суток
         $time_return = date('d.m.Y в H:i', $ts);
     }
     else if ($time_diff > 3600) { // разница от часа до суток
-        $time_return = date('G', $ts) . ' часов назад';
+        $time_return = (date('G', $time) - date('G', $ts)) . ' часов назад';
     }
     else { // разница менее часа
-        $time_return = intval(date('i', $ts)) . ' минут назад';
+        $time_return = (intval(date('i', $time)) - intval(date('i', $ts))) . ' минут назад';
     }
     return $time_return;
 }

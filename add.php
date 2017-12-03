@@ -3,7 +3,7 @@
 require 'functions.php';
 
 
-// запрет для незарегистрированный
+// запрет для незарегистрированных
 if (!isset($_SESSION['name'])) {
     http_response_code(403);
     exit();
@@ -12,6 +12,9 @@ if (!isset($_SESSION['name'])) {
 // подключаем данные
 require 'data.php';
 $layout_data['title'] = 'Добавление лота';
+
+
+// обработка формы
 $fields = [
     'lot-name' => 'Введите наименование лота',
     'category' => 'Выберите категорию',
@@ -20,9 +23,6 @@ $fields = [
     'lot-step' => 'Введите шаг ставки',
     'lot-date' => 'Введите дату завершения торгов'
 ];
-
-
-// обработка формы
 $error_count = 0;
 foreach ($fields as $k => $val) {
     if (isset($_POST[$k])) {
@@ -56,10 +56,10 @@ foreach ($fields as $k => $val) {
 
 // Сохранение файла
 $id = count($lots_list) + 1;
-$filename = 'img/lot-' . $id . '.jpg';
+$add_data['filename'] = 'img/lot-' . $id . '.jpg';
 if (is_uploaded_file($_FILES['file']['tmp_name'])) {
     $add_data['uploaded'] = ' form__item--uploaded';
-    copy($_FILES['file']['tmp_name'], $filename);
+    copy($_FILES['file']['tmp_name'], $add_data['filename']);
 }
 else {
     $add_data['uploaded'] = '';
@@ -68,7 +68,6 @@ else {
 if ($error_count) {
     $add_data['invalid'] = ' form--invalid';
     $add_data['error'] = 'Пожалуйста, исправьте ошибки в форме.';
-    $layout_data['title'] = 'Есть ошибки';
     foreach ($categories_list as $k => $val) {
         if ($data['category'] == $k) {
             $add_data[$k . '-sel'] = ' selected';
@@ -77,41 +76,34 @@ if ($error_count) {
             $add_data[$k . '-sel'] = '';
         }
     }
+    $layout_data['title'] = 'Есть ошибки';
 }
 else {
-    if (isset($_POST['lot-name'])) {
-        $lot_data = [
-            'id' => $id,
-            'categories_list' => $categories_list,
-            'lots_list' => [
-                $id => [
-                    'name' => $data['lot-name'],
-                    'category' => $data['category'],
-                    'picture' => $filename,
-                    'description' => $data['message']
-                ]
-            ],
-            'price' => $data['lot-rate'],
-            'expire' => strtotime($data['lot-date']),
-            'bet_min' => $data['lot-rate'] + $data['lot-step'],
-            'real' => false
-        ];
-        if (file_exists($filename)) {
-            $lot_data['img'] = true;
-        }
-        else {
-            $lot_data['img'] = false;
-        }
-    }
-    else {
+    if (!isset($_POST['lot-name'])) {
         $add_data['invalid'] = '';
         $add_data['error'] = '';
     }
 }
-unset($_POST);
 
 // получаем HTML-код тела страницы
-if (isset($lot_data)) {
+if (isset($_POST['lot-name']) && !$add_data['error']) {
+    $lot_data = [
+        'id' => $id,
+        'categories_list' => $categories_list,
+        'lots_list' => [
+            $id => [
+                'name' => $add_data['lot-name']['value'],
+                'category' => $add_data['category']['value'],
+                'picture' => $add_data['filename'],
+                'description' => $add_data['message']['value']
+            ]
+        ],
+        'price' => $add_data['lot-rate']['value'],
+        'expire' => strtotime($add_data['lot-date']['value']),
+        'bet_min' => $add_data['lot-rate']['value'] + $add_data['lot-step']['value'],
+        'real' => false,
+        'empty' => false
+    ];
     $layout_data['content'] = include_template('lot', $lot_data);
 }
 else {
