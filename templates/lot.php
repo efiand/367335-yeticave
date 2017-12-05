@@ -2,13 +2,13 @@
         <section class="lot-item container">
             <h2><?= $data['lots_list'][$data['id']]['name'] ?></h2>
             <div class="lot-item__content">
-                <div class="lot-item__left"><?php if ($data['lots_list'][$data['id']]['picture']) : ?>
+                <div class="lot-item__left"><?php if ($data['lots_list'][$data['id']]['img']) : ?>
 
                     <div class="lot-item__image">
-                        <img src="<?= $data['lots_list'][$data['id']]['picture'] ?>" width="730" height="548" alt="<?= $data['lots_list'][$data['id']]['name'] ?>">
+                        <img src="<?= $data['lots_list'][$data['id']]['img'] ?>" width="730" height="548" alt="<?= $data['lots_list'][$data['id']]['name'] ?>">
                     </div><?php endif; ?>
 
-                    <p class="lot-item__category">Категория: <span><?= $data['categories_list'][$data['lots_list'][$data['id']]['category']] ?></span></p>
+                    <p class="lot-item__category">Категория: <span><?= $data['categories_list'][$data['lots_list'][$data['id']]['category_id']] ?></span></p>
                     <p class="lot-item__description"><?= $data['lots_list'][$data['id']]['description'] ?></p>
                 </div>
                 <div class="lot-item__right"><?php if ($_SESSION['name']) : ?>

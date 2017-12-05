@@ -1,9 +1,6 @@
 <?php
-// подключаем библиотеку функций
-require 'functions.php';
+require 'common.php';
 
-// подключаем данные
-require 'data.php';
 $bet_step = 500; // шаг ставки
 $price = 0; // текущая цена
 
@@ -13,6 +10,16 @@ if (!$lots_list[$id]) {
     http_response_code(404);
     exit();
 }
+
+// получаем описание лота
+$result = mysqli_query($link, 'SELECT description, price FROM lots WHERE id = ' . $id);
+if (!$result) {
+    $query_errors[] = 'Отсутствует описание лота.';
+}
+else {
+    $lots_list[$id] = array_merge($lots_list[$id], mysqli_fetch_array($result));
+}
+
 $bets = json_decode($_COOKIE['bets-' . $id], true) ?? [];
 if (isset($_POST['cost'])) {
     $price = $_POST['cost-min'];
@@ -33,21 +40,15 @@ if (isset($_POST['cost'])) {
     exit();
 }
 
-// ставки пользователей
-$bets = array_merge($bets, [
-    ['name' => 'Иван', 'price' => 11500, 'ts' => strtotime('-' . rand(1, 50) .' minute')],
-    ['name' => 'Константин', 'price' => 11000, 'ts' => strtotime('-' . rand(1, 18) .' hour')],
-    ['name' => 'Евгений', 'price' => 10500, 'ts' => strtotime('-' . rand(25, 50) .' hour')],
-    ['name' => 'Семён', 'price' => 10000, 'ts' => strtotime('last week')]
-]);
+// максимальная цена
 foreach ($bets as $k => $val) {
     if ($val['price'] > $price) {
         $price = $val['price'];
     }
 }
 
-// настройки скрипта
-$lot_data = [
+// получаем HTML-код тела страницы
+$layout_data['content'] = include_template('lot', [
     'id' => $id,
     'categories_list' => $categories_list,
     'lots_list' => $lots_list,
@@ -58,13 +59,8 @@ $lot_data = [
     'img' => true,
     'real' => true,
     'empty' => $_COOKIE['done-' . $id] ? false : true
-];
-$layout_data['title'] = $lots_list[$id]['name'];
-
-// получаем HTML-код тела страницы
-$layout_data['content'] = include_template('lot', $lot_data);
+]);
 
 // получаем итоговый HTML-код
-$layout = include_template('layout', $layout_data);
-
-print ($layout);
+$layout_data['title'] = $lots_list[$id]['name'];
+print(layout($query_errors, $layout_data));

@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 // шаблонизатор
 function include_template($template_name, $data) {
     $template_file = 'templates/' . $template_name . '.php';
@@ -15,7 +13,7 @@ function include_template($template_name, $data) {
     return $output;
 }
 
-// функция для представления времени в относительном формате
+// представление времени в относительном формате
 function time_relative($ts) {
     $time = $_SERVER['REQUEST_TIME'];
     $time_diff = $time - $ts; // разница текущего и переданного времени
@@ -31,7 +29,7 @@ function time_relative($ts) {
     return $time_return;
 }
 
-// функция для подсчета времени действия лота
+// подсчет времени действия лота
 function remaining($ts) {
     // оставшееся время (timestamp)
     $time_diff = $ts - $_SERVER['REQUEST_TIME'];
@@ -52,5 +50,13 @@ function remaining($ts) {
     return sprintf('%02d:%02d:%02d', $h, $min, $s);
 }
 
-// подключаем здесь сценарий подключения к БД (чтоб не повторяться в каждом сценарии)
-require 'init.php';
+// вывод итогового кода
+function layout($query_errors, $layout_data) {
+    if ($query_errors) {
+        $layout = include_template('error', ['header' => 'Ошибка БД', 'errors' => $query_errors]);
+    }
+    else {
+        $layout = include_template('layout', $layout_data);
+    }
+    return $layout;
+}

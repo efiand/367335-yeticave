@@ -1,9 +1,5 @@
 <?php
-// подключаем библиотеку функций
-require 'functions.php';
-
-// подключаем данные
-require 'data.php';
+require 'common.php';
 
 // получаем все ставки
 $my_bets = [];
@@ -25,19 +21,14 @@ for ($id = 0; $id < $lots_count; $id ++) {
 }
 krsort($my_bets);
 
-// настройки скрипта
+// получаем HTML-код тела страницы
 $mylots_data = [
     'categories_list' => $categories_list,
     'bets' => $my_bets,
     'remaining' => strtotime('tomorrow midnight')
 ];
-$layout_data['title'] = 'Мои ставки';
-
-
-// получаем HTML-код тела страницы
 $layout_data['content'] = include_template('mylots', $mylots_data);
 
 // получаем итоговый HTML-код
-$layout = include_template('layout', $layout_data);
-
-print ($layout);
+$layout_data['title'] = 'Мои ставки';
+print(layout($query_errors, $layout_data));

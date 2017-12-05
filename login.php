@@ -1,12 +1,7 @@
 <?php
-// подключаем библиотеку функций
-require 'functions.php';
+require 'common.php';
 
-// подключаем данные
-require 'data.php';
-require 'userdata.php';
 $layout_data['title'] = 'Вход';
-
 
 // обработка формы
 $mail = strip_tags(trim($_POST['e-mail']));
@@ -72,11 +67,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-
 // получаем HTML-код тела страницы
 $layout_data['content'] = include_template('login', $login_data);
 
 // получаем итоговый HTML-код
-$layout = include_template('layout', $layout_data);
-
-print ($layout);
+print(layout($query_errors, $layout_data));

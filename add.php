@@ -1,6 +1,5 @@
 <?php
-// подключаем библиотеку функций
-require 'functions.php';
+require 'common.php';
 
 
 // запрет для незарегистрированных
@@ -8,11 +7,6 @@ if (!isset($_SESSION['name'])) {
     http_response_code(403);
     exit();
 }
-
-// подключаем данные
-require 'data.php';
-$layout_data['title'] = 'Добавление лота';
-
 
 // обработка формы
 $fields = [
@@ -54,7 +48,7 @@ foreach ($fields as $k => $val) {
     $add_data[$k]['value'] = $data[$k];
 }
 
-// Сохранение файла
+// сохранение файла
 $id = count($lots_list) + 1;
 $add_data['filename'] = 'img/lot-' . $id . '.jpg';
 if (is_uploaded_file($_FILES['file']['tmp_name'])) {
@@ -65,6 +59,7 @@ else {
     $add_data['uploaded'] = '';
 }
 
+// обработка ошибок
 if ($error_count) {
     $add_data['invalid'] = ' form--invalid';
     $add_data['error'] = 'Пожалуйста, исправьте ошибки в форме.';
@@ -111,6 +106,5 @@ else {
 }
 
 // получаем итоговый HTML-код
-$layout = include_template('layout', $layout_data);
-
-print ($layout);
+$layout_data['title'] = 'Добавление лота';
+print(layout($query_errors, $layout_data));
