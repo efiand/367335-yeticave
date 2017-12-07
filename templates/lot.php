@@ -11,7 +11,7 @@
                     <p class="lot-item__category">Категория: <span><?= $data['categories_list'][$data['lots_list'][$data['id']]['category_id']] ?></span></p>
                     <p class="lot-item__description"><?= $data['lots_list'][$data['id']]['description'] ?></p>
                 </div>
-                <div class="lot-item__right"><?php if ($_SESSION['name']) : ?>
+                <div class="lot-item__right"><?php if ($_SESSION['user']['name']) : ?>
 
                     <div class="lot-item__state">
                         <div class="lot-item__timer timer">
@@ -25,13 +25,12 @@
                             <div class="lot-item__min-cost">
                                 Мин. ставка <span><?= $data['bet_min']; ?> р</span>
                             </div>
-                        </div><?php if ($data['real'] && $data['empty']) : ?>
+                        </div><?php if ($data['real'] && $data['empty'] && ! $data['self'] && ! $data['expired']) : ?>
 
                         <form class="lot-item__form" action="lot.php?id=<?= $data['id']; ?>" method="post">
                             <p class="lot-item__form-item">
                                 <label for="cost">Ваша ставка</label>
-                                <input id="cost" type="number" name="cost" placeholder="<?= $data['bet_min']; ?>">
-                                <input type="hidden" name="cost-min" value="<?= $data['bet_min']; ?>">
+                                <input id="cost" type="text" name="cost" placeholder="<?= $data['bet_min']; ?>">
                             </p>
                             <button type="submit" class="button">Сделать ставку</button>
                         </form><?php endif; ?>
@@ -39,7 +38,7 @@
                     </div><?php endif; if ($data['real']) : ?>
 
                     <div class="history">
-                        <h3>История ставок (<span>4</span>)</h3>
+                        <h3>История ставок (<span><?= $data['count']; ?></span>)</h3>
                         <table class="history__list"><?php foreach ($data['bets'] as $val) : ?>
 
                             <tr class="history__item">

@@ -1,9 +1,8 @@
 <?php
-require 'common.php';
-
+require 'app/common.php';
 
 // запрет для незарегистрированных
-if (!isset($_SESSION['name'])) {
+if (! isset($_SESSION['user'])) {
     http_response_code(403);
     exit();
 }
@@ -22,8 +21,16 @@ foreach ($fields as $k => $val) {
     if (isset($_POST[$k])) {
         $data[$k] = strip_tags(trim($_POST[$k]));
         if ($data[$k]) {
-            if (($k == 'lot-rate' || $k == 'lot-step') && !is_numeric($data[$k])) {
+            if (($k == 'lot-rate' || $k == 'lot-step') && ! is_numeric($data[$k])) {
                 $error = true;
+            }
+            else if ($k == 'lot-date') {
+                // переводим в метку времени
+                $data['lot-date'] = strtotime($data['lot-date']);
+                if ($data['lot-date'] - $time < 86400) {
+                    $error = true;
+                    $add_data['error']['lot-date'] = 'Выберите период больше суток!';
+                }
             }
             else {
                 $error = false;
@@ -37,32 +44,26 @@ foreach ($fields as $k => $val) {
         $error = false;
     }
     if ($error) {
-        $error_count++;
+        $error_count ++;
         $add_data[$k]['invalid'] = ' form__item--invalid';
-        $add_data[$k]['error'] = $val;
+        $add_data['error'][$k] = $add_data['error'][$k] ?? $val;
     }
     else {
         $add_data[$k]['invalid'] = '';
-        $add_data[$k]['error'] = '';
+        $add_data['error'][$k] = '';
     }
     $add_data[$k]['value'] = $data[$k];
 }
 
 // сохранение файла
-$id = count($lots_list) + 1;
-$add_data['filename'] = 'img/lot-' . $id . '.jpg';
-if (is_uploaded_file($_FILES['file']['tmp_name'])) {
-    $add_data['uploaded'] = ' form__item--uploaded';
-    copy($_FILES['file']['tmp_name'], $add_data['filename']);
-}
-else {
-    $add_data['uploaded'] = '';
-}
+require 'app/save_img.php';
+$add_data['uploaded'] = $uploaded_class;
+$add_data['error']['img'] = $file_error;
 
 // обработка ошибок
 if ($error_count) {
+    $add_data['error_main'] = 'Пожалуйста, исправьте ошибки в форме.';
     $add_data['invalid'] = ' form--invalid';
-    $add_data['error'] = 'Пожалуйста, исправьте ошибки в форме.';
     foreach ($categories_list as $k => $val) {
         if ($data['category'] == $k) {
             $add_data[$k . '-sel'] = ' selected';
@@ -74,36 +75,31 @@ if ($error_count) {
     $layout_data['title'] = 'Есть ошибки';
 }
 else {
-    if (!isset($_POST['lot-name'])) {
+    if (! isset($_POST['lot-name'])) {
         $add_data['invalid'] = '';
-        $add_data['error'] = '';
+        $add_data['error_main'] = '';
+    }
+    else {
+        $result = mysqli_query($link, 'INSERT INTO lots SET name = \''
+            . $data['lot-name'] . '\', description = \'' . $data['message']
+            . '\', price = ' . $data['lot-rate'] . ', step = ' . floor($data['lot-step'])
+            . ', create_ts = ' . $time . ', expire_ts = '. $data['lot-date']
+            . ', img = \'' . $_SESSION['url'] . '\', category_id = \''
+            . $data['category'] . '\', user_id = ' . $_SESSION['user']['id']);
+        if (! $result) {
+            $query_errors[] = 'Регистрация невозможна по техническим причинам:' . mysqli_error($link);
+        }
+        else {
+            header('Location: lot.php?id=' . mysqli_insert_id($link));
+            unset($_SESSION['url']);
+            exit();
+        }
     }
 }
 
 // получаем HTML-код тела страницы
-if (isset($_POST['lot-name']) && !$add_data['error']) {
-    $lot_data = [
-        'id' => $id,
-        'categories_list' => $categories_list,
-        'lots_list' => [
-            $id => [
-                'name' => $add_data['lot-name']['value'],
-                'category' => $add_data['category']['value'],
-                'picture' => $add_data['filename'],
-                'description' => $add_data['message']['value']
-            ]
-        ],
-        'price' => $add_data['lot-rate']['value'],
-        'expire' => strtotime($add_data['lot-date']['value']),
-        'bet_min' => $add_data['lot-rate']['value'] + $add_data['lot-step']['value'],
-        'real' => false,
-        'empty' => false
-    ];
-    $layout_data['content'] = include_template('lot', $lot_data);
-}
-else {
-    $layout_data['content'] = include_template('add', $add_data);
-}
+$add_data['categories_list'] = $categories_list;
+$layout_data['content'] = include_template('add', $add_data);
 
 // получаем итоговый HTML-код
 $layout_data['title'] = 'Добавление лота';

@@ -1,5 +1,5 @@
 <?php
-require 'common.php';
+require 'app/common.php';
 
 // получаем все ставки
 $my_bets = [];

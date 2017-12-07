@@ -1,5 +1,5 @@
 <?php
-require 'common.php';
+require 'app/common.php';
 
 // получаем HTML-код тела страницы
 $layout_data['content'] = include_template('index', [
