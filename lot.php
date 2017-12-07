@@ -2,8 +2,8 @@
 require 'app/common.php';
 
 // получаем идентификатор лота
-$id = $_GET['id'];
-if (! $lots_list[$id]) {
+$id = isset($_GET['id']) ? $_GET['id'] : 1;
+if (! isset($lots_list[$id])) {
     http_response_code(404);
     exit();
 }
@@ -62,7 +62,7 @@ if (isset($_POST['cost'])) {
     }
     // пишем новую ставку в базу
     $result = mysqli_query($link, 'INSERT INTO bets SET create_ts = ' . $time
-        . ', price = ' . $cost . ', lot_id = ' . $id . ', user_id = ' . $user_id);
+        . ', price = ' . $cost . ', lot_id = ' . $id . ', user_id = ' . $_SESSION['user']['id']);
     if (! $result) {
         $query_errors[] = 'Невозможно записать ставку.';
     }
@@ -96,4 +96,4 @@ $layout_data['content'] = include_template('lot', [
 
 // получаем итоговый HTML-код
 $layout_data['title'] = $lots_list[$id]['name'];
-print(layout($query_errors, $layout_data));
+print(layout($layout_data, $query_errors));

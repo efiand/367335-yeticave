@@ -17,31 +17,22 @@ $fields = [
     'lot-date' => 'Введите дату завершения торгов'
 ];
 $error_count = 0;
+
+// проверка введенных данных
 foreach ($fields as $k => $val) {
+    $add_data[$k]['value'] = '';
+    $error = false;
     if (isset($_POST[$k])) {
         $data[$k] = strip_tags(trim($_POST[$k]));
         if ($data[$k]) {
+            $add_data[$k]['value'] = $data[$k];
             if (($k == 'lot-rate' || $k == 'lot-step') && ! is_numeric($data[$k])) {
                 $error = true;
-            }
-            else if ($k == 'lot-date') {
-                // переводим в метку времени
-                $data['lot-date'] = strtotime($data['lot-date']);
-                if ($data['lot-date'] - $time < 86400) {
-                    $error = true;
-                    $add_data['error']['lot-date'] = 'Выберите период больше суток!';
-                }
-            }
-            else {
-                $error = false;
             }
         }
         else {
             $error = true;
         }
-    }
-    else {
-        $error = false;
     }
     if ($error) {
         $error_count ++;
@@ -52,7 +43,16 @@ foreach ($fields as $k => $val) {
         $add_data[$k]['invalid'] = '';
         $add_data['error'][$k] = '';
     }
-    $add_data[$k]['value'] = $data[$k];
+}
+
+// отдельная проверка даты окончания торгов
+if (isset($data['lot-date']) && $data['lot-date']) {
+    $data['lot-date'] = strtotime($data['lot-date']);
+    if ($data['lot-date'] - $time < 86400) {
+        $error_count ++;
+        $add_data['lot-date']['invalid'] = ' form__item--invalid';
+        $add_data['error']['lot-date'] = 'Выберите период больше суток!';
+    }
 }
 
 // сохранение файла
@@ -80,14 +80,24 @@ else {
         $add_data['error_main'] = '';
     }
     else {
-        $result = mysqli_query($link, 'INSERT INTO lots SET name = \''
-            . $data['lot-name'] . '\', description = \'' . $data['message']
-            . '\', price = ' . $data['lot-rate'] . ', step = ' . floor($data['lot-step'])
-            . ', create_ts = ' . $time . ', expire_ts = '. $data['lot-date']
-            . ', img = \'' . $_SESSION['url'] . '\', category_id = \''
-            . $data['category'] . '\', user_id = ' . $_SESSION['user']['id']);
+        // запись в БД
+        $sql = 'INSERT INTO lots ('
+        . 'name, description, price, step, create_ts, expire_ts, img, '
+        . 'category_id, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        $query_data = [
+            $data['lot-name'],
+            $data['message'],
+            floor($data['lot-rate']),
+            floor($data['lot-step']),
+            $time,
+            $data['lot-date'],
+            $_SESSION['url'],
+            $data['category'],
+            $_SESSION['user']['id']
+        ];
+        $result = db_get_prepare_stmt($link, $sql, $query_data);
         if (! $result) {
-            $query_errors[] = 'Регистрация невозможна по техническим причинам:' . mysqli_error($link);
+            $query_errors[] = 'Регистрация невозможна по техническим причинам.';
         }
         else {
             header('Location: lot.php?id=' . mysqli_insert_id($link));
@@ -103,4 +113,4 @@ $layout_data['content'] = include_template('add', $add_data);
 
 // получаем итоговый HTML-код
 $layout_data['title'] = 'Добавление лота';
-print(layout($query_errors, $layout_data));
+print(layout($layout_data, $query_errors));

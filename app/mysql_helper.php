@@ -1,10 +1,9 @@
 <?php
-
 /**
  * Создает подготовленное выражение на основе готового SQL запроса и переданных данных
  *
- * @param $link mysqli Ресурс соединения
- * @param $sql string SQL запрос с плейсхолдерами вместо значений
+ * @param mysqli $link Ресурс соединения
+ * @param string $sql SQL запрос с плейсхолдерами вместо значений
  * @param array $data Данные для вставки на место плейсхолдеров
  *
  * @return mysqli_stmt Подготовленное выражение
@@ -37,9 +36,8 @@ function db_get_prepare_stmt($link, $sql, $data = []) {
 
         $values = array_merge([$stmt, $types], $stmt_data);
 
-        $func = 'mysqli_stmt_bind_param';
-        $func(...$values);
+        mysqli_stmt_bind_param(...$values);
     }
 
-    return $stmt;
+    return mysqli_stmt_execute($stmt);
 }

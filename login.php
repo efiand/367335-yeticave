@@ -4,7 +4,7 @@ require 'app/common.php';
 $layout_data['title'] = 'Вход';
 $login_data = [
     'e-mail' => [
-        'value' => $mail,
+        'value' => '',
         'invalid' => ''
     ],
     'password' => [
@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $login_data['error']['password'] = 'Вы ввели неверный пароль';
         }
     }
-    else {
+    else if (! $login_data['error']['e-mail']) {
         $login_data['error']['password'] = 'Вы не ввели пароль';
     }
     if ($login_data['error']['password']) {
@@ -88,4 +88,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $layout_data['content'] = include_template('login', $login_data);
 
 // получаем итоговый HTML-код
-print(layout($query_errors, $layout_data));
+print(layout($layout_data, $query_errors));

@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL);
+
 // подключаем библиотеку функций
 require 'app/functions.php';
 
@@ -11,12 +13,9 @@ require 'app/mysql_helper.php';
 // настройки даты и времени
 date_default_timezone_set('Europe/Moscow');
 $time = $_SERVER['REQUEST_TIME'];
-$expires = $time + 60*60*24*30;
 
 // прочие настройки
 session_start();
-$name = $_SESSION['user']['name'];
-$user_id = $_SESSION['user']['id'];
 $query_errors = []; // собираем ошибки запросов к БД
 
 // получение списка категорий
@@ -41,8 +40,10 @@ else {
     }
 }
 
+// данные для основного шаблона
+$user_avatar = isset($_SESSION['user']['img']) ? $_SESSION['user']['img'] : 'img/user.jpg';
 $layout_data = [
-    'user_avatar' => $_SESSION['user']['img'] ?? 'img/user.jpg',
+    'user_avatar' => $user_avatar,
     'categories_list' => $categories_list,
     'index_link' => 'href="/" '
 ];
