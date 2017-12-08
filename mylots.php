@@ -1,6 +1,9 @@
 <?php
 require 'app/common.php';
 
+// получаем список лотов
+require 'app/lots_list.php';
+
 // получаем все ставки
 $my_bets = [];
 $lots_count = count($lots_list);

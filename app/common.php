@@ -29,17 +29,6 @@ else {
     }
 }
 
-// получение списка лотов
-$result = mysqli_query($link, 'SELECT id, name, category_id, price, step, expire_ts, img, user_id FROM lots');
-if (! $result) {
-    $query_errors[] = 'Нет доступа к списку лотов.';
-}
-else {
-    while ($row = mysqli_fetch_assoc($result)) {
-        $lots_list[$row['id']] = $row;
-    }
-}
-
 // данные для основного шаблона
 $user_avatar = isset($_SESSION['user']['img']) ? $_SESSION['user']['img'] : 'img/user.jpg';
 $layout_data = [

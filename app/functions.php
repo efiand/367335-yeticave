@@ -38,10 +38,10 @@ function time_relative($ts) {
         $time_return = date('d.m.Y в H:i', $ts);
     }
     else if ($time_diff > 3600) {
-        $time_return = (date('G', $time) - date('G', $ts)) . ' часов назад';
+        $time_return = floor($time_diff / 3600) . ' часов назад';
     }
     else {
-        $time_return = (intval(date('i', $time)) - intval(date('i', $ts))) . ' минут назад';
+        $time_return = floor($time_diff / 60) . ' минут назад';
     }
     return $time_return;
 }

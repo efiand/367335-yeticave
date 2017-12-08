@@ -32,7 +32,7 @@ SELECT * FROM lots WHERE expire_ts > 1512428601;
 SELECT * FROM lots WHERE name LIKE 'Маска%' OR description LIKE '% и %';
 
 /* обновить название лота по его идентификатору */
-SELECT name FROM lots WHERE id = 3;
+UPDATE lots SET name = 'Крепления Union Contact Pro 2015 года размер L/XL' WHERE id = 3;
 
 /* получить список самых свежих ставок для лота по его идентификатору */
 SELECT * FROM bets WHERE lot_id = 3;

@@ -1,6 +1,9 @@
 <?php
 require 'app/common.php';
 
+// получаем список лотов
+require 'app/lots_list.php';
+
 // получаем идентификатор лота
 $id = isset($_GET['id']) ? $_GET['id'] : 1;
 if (! isset($lots_list[$id])) {
