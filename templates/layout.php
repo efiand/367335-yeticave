@@ -47,15 +47,8 @@
     </main>
 
     <footer class="main-footer">
-        <nav class="nav">
-            <ul class="nav__list container"><?php foreach ($data['categories_list'] as $val) : ?>
+<?= $data['categories']; ?>
 
-                <li class="nav__item">
-                    <a href="all-lots.html"><?=$val?></a>
-                </li><?php endforeach; ?>
-
-            </ul>
-        </nav>
         <div class="main-footer__bottom container">
             <div class="main-footer__copyright">
                 <p>© 2017, YetiCave</p>

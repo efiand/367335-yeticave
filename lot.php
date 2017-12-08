@@ -37,7 +37,7 @@ else {
             'ts' => $row['create_ts']
         ];
         // автор лота не может делать ставку
-        if ($row['user_id'] == $_SESSION['user']['id']) {
+        if (isset($_SESSION['user']) && $row['user_id'] == $_SESSION['user']['id']) {
             $_SESSION['bet_done'][$row['user_id']] = true;
         }
     }
@@ -76,6 +76,11 @@ if (isset($_POST['cost'])) {
     }
 }
 
+// свой ли лот
+$self = false;
+if (isset($_SESSION['user']) && $lots_list[$id]['user_id'] == $_SESSION['user']['id']) {
+    $self = true;
+}
 
 // получаем HTML-код тела страницы
 $layout_data['content'] = include_template('lot', [
@@ -91,7 +96,7 @@ $layout_data['content'] = include_template('lot', [
     'img' => true,
     'real' => true,
     'empty' => isset($_SESSION['bet_done'][$id]) ? false : true,
-    'self' => $lots_list[$id]['user_id'] == $_SESSION['user']['id'] ? true : false
+    'self' =>  $self
 ]);
 
 // получаем итоговый HTML-код

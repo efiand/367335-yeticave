@@ -94,6 +94,7 @@ else {
 
 // получаем HTML-код тела страницы
 $signup_data['categories_list'] = $categories_list;
+$signup_data['categories'] = $layout_data['categories'];
 $layout_data['content'] = include_template('sign-up', $signup_data);
 
 // получаем итоговый HTML-код

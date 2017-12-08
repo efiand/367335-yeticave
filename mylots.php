@@ -24,6 +24,7 @@ krsort($my_bets);
 // получаем HTML-код тела страницы
 $mylots_data = [
     'categories_list' => $categories_list,
+    'categories' => $layout_data['categories'],
     'bets' => $my_bets,
     'remaining' => strtotime('tomorrow midnight')
 ];

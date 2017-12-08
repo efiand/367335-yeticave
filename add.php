@@ -60,18 +60,20 @@ require 'app/save_img.php';
 $add_data['uploaded'] = $uploaded_class;
 $add_data['error']['img'] = $file_error;
 
+// выбранная категория
+foreach ($categories_list as $k => $val) {
+    if ($error_count && $data['category'] == $k) {
+        $add_data[$k . '-sel'] = ' selected';
+    }
+    else {
+        $add_data[$k . '-sel'] = '';
+    }
+}
+
 // обработка ошибок
 if ($error_count) {
     $add_data['error_main'] = 'Пожалуйста, исправьте ошибки в форме.';
     $add_data['invalid'] = ' form--invalid';
-    foreach ($categories_list as $k => $val) {
-        if ($data['category'] == $k) {
-            $add_data[$k . '-sel'] = ' selected';
-        }
-        else {
-            $add_data[$k . '-sel'] = '';
-        }
-    }
     $layout_data['title'] = 'Есть ошибки';
 }
 else {

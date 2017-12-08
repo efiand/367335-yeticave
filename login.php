@@ -85,6 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 // получаем HTML-код тела страницы
+$login_data['categories'] = $layout_data['categories'];
 $layout_data['content'] = include_template('login', $login_data);
 
 // получаем итоговый HTML-код

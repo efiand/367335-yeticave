@@ -45,5 +45,8 @@ $user_avatar = isset($_SESSION['user']['img']) ? $_SESSION['user']['img'] : 'img
 $layout_data = [
     'user_avatar' => $user_avatar,
     'categories_list' => $categories_list,
+    'categories' => include_template('categories', [
+        'categories_list' => $categories_list
+    ]),
     'index_link' => 'href="/" '
 ];
