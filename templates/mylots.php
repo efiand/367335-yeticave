@@ -1,13 +1,6 @@
 
-        <nav class="nav">
-            <ul class="nav__list container"><?php foreach ($data['categories_list'] as $val) : ?>
+<?= $data['categories']; ?>
 
-                <li class="nav__item">
-                    <a href="all-lots.html"><?=$val?></a>
-                </li><?php endforeach; ?>
-
-            </ul>
-        </nav>
         <section class="rates container">
             <h2>Мои ставки</h2>
             <table class="rates__list"><?php foreach ($data['bets'] as $k => $val) : ?>
