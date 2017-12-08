@@ -38,6 +38,5 @@ function db_get_prepare_stmt($link, $sql, $data = []) {
 
         mysqli_stmt_bind_param(...$values);
     }
-
-    return mysqli_stmt_execute($stmt);
+    return $stmt;
 }

@@ -97,7 +97,8 @@ else {
             $data['category'],
             $_SESSION['user']['id']
         ];
-        $result = db_get_prepare_stmt($link, $sql, $query_data);
+        $stmt = db_get_prepare_stmt($link, $sql, $query_data);
+        $result = mysqli_stmt_execute($stmt);
         if (! $result) {
             $query_errors[] = 'Регистрация невозможна по техническим причинам.';
         }
