@@ -32,4 +32,5 @@ $layout_data['content'] = include_template('mylots', $mylots_data);
 
 // получаем итоговый HTML-код
 $layout_data['title'] = 'Мои ставки';
+$layout_data['main_container'] = '';
 print(layout($layout_data, $query_errors));

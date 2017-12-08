@@ -43,7 +43,7 @@
         </div>
     </header>
 
-    <main class="container"><?= $data['content']; ?>
+    <main<?= $data['main_container']; ?>><?= $data['content']; ?>
     </main>
 
     <footer class="main-footer">

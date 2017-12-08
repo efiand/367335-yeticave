@@ -89,4 +89,5 @@ $login_data['categories'] = $layout_data['categories'];
 $layout_data['content'] = include_template('login', $login_data);
 
 // получаем итоговый HTML-код
+$layout_data['main_container'] = '';
 print(layout($layout_data, $query_errors));

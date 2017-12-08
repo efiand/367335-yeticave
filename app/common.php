@@ -48,5 +48,6 @@ $layout_data = [
     'categories' => include_template('categories', [
         'categories_list' => $categories_list
     ]),
-    'index_link' => 'href="/" '
+    'index_link' => 'href="/" ',
+    'main_container' => ' class="container"'
 ];

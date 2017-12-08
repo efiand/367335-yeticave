@@ -1,5 +1,5 @@
 
-        <form class="form form--add-lot<?= $data['invalid']; ?> container" action="add.php" method="post" enctype="multipart/form-data">
+        <form class="form form--add-lot<?= $data['invalid']; ?>" action="add.php" method="post" enctype="multipart/form-data">
             <h2>Добавление лота</h2>
             <div class="form__container-two">
                 <div class="form__item<?= $data['lot-name']['invalid']; ?>">
