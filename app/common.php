@@ -1,6 +1,9 @@
 <?php
 error_reporting(E_ALL);
 
+// Composer
+require 'vendor/autoload.php';
+
 // подключаем библиотеку функций
 require 'app/functions.php';
 
