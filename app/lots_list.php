@@ -12,7 +12,7 @@
  * @param array $lots_list Получаемый список лотов (двумерный массив)
  */
 
-$lots_count = 0;
+$lots_count = $lots_count ?? 0;
 if (isset($lots_sql) && isset($lots_query_data)) {
     $result = db_get_prepare_stmt($link, $lots_sql, $lots_query_data);
 }

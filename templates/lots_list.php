@@ -24,12 +24,14 @@
                     </li><?php endforeach; ?>
 
                 </ul>
-            </section>
+            </section><? if (isset($data['pagination'])) : ?>
+
             <ul class="pagination-list">
                 <li class="pagination-item pagination-item-prev"><a>Назад</a></li><?php foreach ($data['pagination'] as $val) : ?>
 
                 <li class="pagination-item<?php if ($data['active'] == $val) : ?> pagination-item-active<?php endif; ?>"><a<?php if ($data['active'] != $val) : ?> href="<?= $data['script']; ?>.php?<?= $data['query_str']; ?>page=<?= $val; ?>"<?php endif; ?>><?= $val; ?></a></li><?php endforeach; ?>
 
                 <li class="pagination-item pagination-item-next"><a href="#">Вперед</a></li>
-            </ul>
+            </ul><?php endif; ?>
+
         </div>

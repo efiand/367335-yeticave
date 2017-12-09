@@ -33,13 +33,15 @@ if ($search) {
         require 'app/lots_list.php';
 
         $search_data = [
-            'script' => 'search',
             'announcements_list' => $lots_list,
-            'header' => 'Результаты поиска по запросу «' . $search . '»',
-            'pagination' => $pages,
-            'active' => $cur_page,
-            'query_str' => 'search=' . $search . '&'
+            'header' => 'Результаты поиска по запросу «' . $search . '»'
         ];
+        if ($lots_count > $page_items) {
+            $search_data['pagination'] = $pages;
+            $search_data['script'] = 'search';
+            $search_data['active'] = $cur_page;
+            $search_data['query_str'] = 'search=' . $search . '&';
+        }
     }
     else {
         $search_data['blank'] = 'Ничего не найдено по вашему запросу.';
