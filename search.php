@@ -2,7 +2,7 @@
 require 'app/common.php';
 
 // поисковая фраза
-$search = $_GET['search'] ?? '';
+$search = trim(strip_tags($_GET['search'])) ?? '';
 
 if ($search) {
     // получаем id результатов поиска

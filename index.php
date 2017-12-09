@@ -27,5 +27,6 @@ $layout_data['content'] = include_template('index', [
 
 // получаем итоговый HTML-код
 $layout_data['title'] = 'Главная';
+$layout_data['main_container'] = '';
 $layout_data['index_link'] = '';
 print(layout($layout_data, $query_errors));
