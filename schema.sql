@@ -1,6 +1,3 @@
-CREATE DATABASE IF NOT EXISTS yeticave;
-USE yeticave;
-
 CREATE TABLE categories (
 id CHAR(10) PRIMARY KEY,
 name CHAR(15)
@@ -21,6 +18,7 @@ user_id	SMALLINT,
 winner_id SMALLINT
 );
 CREATE UNIQUE INDEX id ON lots(id);
+CREATE FULLTEXT INDEX lot_search ON lots(name, description);
 CREATE INDEX price ON lots(price);
 CREATE INDEX step ON lots(step);
 CREATE INDEX create_ts ON lots(create_ts);
