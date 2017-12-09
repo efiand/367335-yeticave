@@ -1,3 +1,4 @@
+
 CREATE TABLE categories (
 id CHAR(10) PRIMARY KEY,
 name CHAR(15)

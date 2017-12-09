@@ -1,4 +1,3 @@
-USE yeticave;
 
 INSERT INTO categories SET id = 'boards', name = 'Доски и лыжи';
 INSERT INTO categories SET id = 'attachment', name = 'Крепления';

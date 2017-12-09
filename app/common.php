@@ -32,6 +32,7 @@ else {
 // данные для основного шаблона
 $user_avatar = isset($_SESSION['user']['img']) ? $_SESSION['user']['img'] : 'img/user.jpg';
 $layout_data = [
+	'search_text' => '',
     'user_avatar' => $user_avatar,
     'categories_list' => $categories_list,
     'categories' => include_template('categories', [
