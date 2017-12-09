@@ -1,5 +1,3 @@
-
-<?= $data['categories']; ?>
 <?php
 if (! isset($data['blank'])) :
     require 'templates/lots_list.php';

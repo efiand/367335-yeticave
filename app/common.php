@@ -22,7 +22,7 @@ session_start();
 $query_errors = []; // собираем ошибки запросов к БД
 
 // получение списка категорий
-$result = mysqli_query($link, 'SELECT * FROM categories');
+$result = mysqli_query($link, 'SELECT * FROM categories ORDER BY name');
 if (! $result) {
     $query_errors[] = 'Нет доступа к списку категорий.';
 }
@@ -41,6 +41,5 @@ $layout_data = [
     'categories' => include_template('categories', [
         'categories_list' => $categories_list
     ]),
-    'index_link' => 'href="/" ',
-    'main_container' => ' class="container"'
+    'index_link' => 'href="/" '
 ];

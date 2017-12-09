@@ -2,11 +2,16 @@
 require 'app/common.php';
 
 // поисковая фраза
-$search = trim(strip_tags($_GET['search'])) ?? '';
+if (isset($_GET['search']) && $_GET['search']) {
+    $search = trim(strip_tags($_GET['search']));
+}
+else {
+    $search = '';
+}
 
 if ($search) {
     // получаем id результатов поиска
-    $sql = 'SELECT id, name, price, expire_ts, img, category_id FROM lots WHERE MATCH(name, description) AGAINST(? IN BOOLEAN MODE) ORDER BY id DESC';
+    $sql = 'SELECT id FROM lots WHERE MATCH(name, description) AGAINST(? IN BOOLEAN MODE) ORDER BY id DESC';
     $stmt = db_get_prepare_stmt($link, $sql, [$search]);
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
@@ -54,10 +59,8 @@ else {
 
 // получаем HTML-код тела страницы
 $search_data['categories_list'] = $categories_list;
-$search_data['categories'] = $layout_data['categories'];
 $layout_data['content'] = include_template('search', $search_data);
 
 // получаем итоговый HTML-код
 $layout_data['title'] = 'Результаты поиска';
-$layout_data['main_container'] = '';
 print(layout($layout_data, $query_errors));

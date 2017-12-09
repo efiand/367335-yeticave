@@ -8,5 +8,7 @@
             "email": "efiand@ya.ru"
         }
     ],
-    "require": {}
+    "require": {
+        "swiftmailer/swiftmailer": "^6.0"
+    }
 }

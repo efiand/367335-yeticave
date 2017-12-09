@@ -43,7 +43,8 @@
         </div>
     </header>
 
-    <main<?= $data['main_container']; ?>><?= $data['content']; ?>
+    <main>
+<?php if ($_SERVER['SCRIPT_NAME'] !== '/index.php') : ?><?= $data['categories']; ?><?php endif; ?><?= $data['content']; ?>
     </main>
 
     <footer class="main-footer">
@@ -85,6 +86,5 @@
             </div>
         </div>
     </footer>
-
 </body>
 </html>
