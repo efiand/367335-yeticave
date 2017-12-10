@@ -1,6 +1,9 @@
 <?php
 require 'app/common.php';
 
+// определение победителей
+require 'app/getwinner.php';
+
 // общее количество открытых лотов
 $result = mysqli_query($link, 'SELECT COUNT(*) AS cnt FROM lots WHERE expire_ts > ' . $time);
 if (! $result) {
