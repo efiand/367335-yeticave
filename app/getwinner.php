@@ -18,13 +18,16 @@ if (! $list_result) {
 }
 else {
     while ($lot = mysqli_fetch_assoc($list_result)) {
-        $result = mysqli_query($link, 'SELECT users.id, name, email FROM bets JOIN users ON bets.user_id = users.id WHERE lot_id = ' . $lot['id'] . ' ORDER BY price DESC LIMIT 1');
+        $result = mysqli_query($link, 'SELECT users.id, name, email FROM bets '
+        . 'JOIN users ON bets.user_id = users.id WHERE lot_id = ' . $lot['id']
+        . ' ORDER BY price DESC LIMIT 1');
         if (! $result) {
             $query_errors[] = 'Нет доступа к списку ставок.';
         }
         else if (mysqli_num_rows($result)) {
             $winner = mysqli_fetch_assoc($result);
-            $winner_write = mysqli_query($link, 'UPDATE lots SET winner_id = ' . $winner['id'] . ' WHERE id = ' . $lot['id']);
+            $winner_write = mysqli_query($link, 'UPDATE lots SET winner_id = ' . $winner['id']
+                . ' WHERE id = ' . $lot['id']);
             if (! $winner_write) {
                 $query_errors[] = 'Ошибка записи победителя.';
             }
