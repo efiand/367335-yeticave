@@ -4,8 +4,7 @@
  *
  * @param string $template_name Имя PHP-шаблона (без расширения)
  * @param array $data Массив с данными для шаблона
- * @param string $_SESSION['url'] Запись имени файла в сессию до конца операции
- * @param array $signup_data Признак регистрационной страницы, где img не обязателен
+ * @param string $template_file Путь к файлу шаблона
  *
  * @return string $output Итоговый HTML-код из шаблона, где элементы $data заменены их значениями
  */
