@@ -2,11 +2,16 @@
 require 'app/common.php';
 
 // поисковая фраза
-$search = $_GET['search'] ?? '';
+if (isset($_GET['search']) && $_GET['search']) {
+    $search = trim(strip_tags($_GET['search']));
+}
+else {
+    $search = '';
+}
 
 if ($search) {
     // получаем id результатов поиска
-    $sql = 'SELECT id, name, price, expire_ts, img, category_id FROM lots WHERE MATCH(name, description) AGAINST(? IN BOOLEAN MODE) ORDER BY id DESC';
+    $sql = 'SELECT id FROM lots WHERE MATCH(name, description) AGAINST(? IN BOOLEAN MODE) ORDER BY id DESC';
     $stmt = db_get_prepare_stmt($link, $sql, [$search]);
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
@@ -33,13 +38,15 @@ if ($search) {
         require 'app/lots_list.php';
 
         $search_data = [
-            'script' => 'search',
             'announcements_list' => $lots_list,
-            'header' => 'Результаты поиска по запросу «' . $search . '»',
-            'pagination' => $pages,
-            'active' => $cur_page,
-            'query_str' => 'search=' . $search . '&'
+            'header' => 'Результаты поиска по запросу «' . $search . '»'
         ];
+        if ($lots_count > $page_items) {
+            $search_data['pagination'] = $pages;
+            $search_data['script'] = 'search';
+            $search_data['active'] = $cur_page;
+            $search_data['query_str'] = 'search=' . $search . '&';
+        }
     }
     else {
         $search_data['blank'] = 'Ничего не найдено по вашему запросу.';
@@ -52,10 +59,8 @@ else {
 
 // получаем HTML-код тела страницы
 $search_data['categories_list'] = $categories_list;
-$search_data['categories'] = $layout_data['categories'];
 $layout_data['content'] = include_template('search', $search_data);
 
 // получаем итоговый HTML-код
 $layout_data['title'] = 'Результаты поиска';
-$layout_data['main_container'] = '';
 print(layout($layout_data, $query_errors));

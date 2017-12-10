@@ -86,6 +86,11 @@ if (isset($_SESSION['user']) && $lots_list[$id]['user_id'] == $_SESSION['user'][
 }
 
 // получаем HTML-код тела страницы
+$expire_str = remaining($lots_list[$id]['expire_ts']);
+$finishing = '';
+if (substr($expire_str, 0, 3) === '00:') {
+    $finishing = ' timer--finishing';
+}
 $layout_data['content'] = include_template('lot', [
     'id' => $id,
     'categories_list' => $categories_list,
@@ -93,7 +98,8 @@ $layout_data['content'] = include_template('lot', [
     'bets' => $bets,
     'count' => $count,
     'price' => $price,
-    'expire' => $lots_list[$id]['expire_ts'],
+    'expire' => $expire_str,
+    'finishing' => $finishing,
     'expired' => ($lots_list[$id]['expire_ts'] - $time > 0) ? false : true,
     'bet_min' => $price + $bet_step,
     'img' => true,

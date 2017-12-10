@@ -1,6 +1,3 @@
-
-<?= $data['categories']; ?>
-
         <form class="form<?= $data['invalid']; ?> container" action="login.php" method="post">
             <h2>Вход</h2>
             <div class="form__item<?= $data['e-mail']['invalid']; ?>">

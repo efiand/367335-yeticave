@@ -1,6 +1,3 @@
-
-<?= $data['categories']; ?>
-
         <form class="form<?= $data['invalid']; ?> container" action="sign-up.php" method="post" enctype="multipart/form-data">
             <h2>Регистрация нового аккаунта</h2>
             <div class="form__item<?= $data['e-mail']['invalid']; ?>">

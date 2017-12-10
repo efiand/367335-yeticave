@@ -1,4 +1,3 @@
-
         <section class="lot-item container">
             <h2><?= $data['lots_list'][$data['id']]['name'] ?></h2>
             <div class="lot-item__content">
@@ -14,8 +13,8 @@
                 <div class="lot-item__right"><?php if (isset($_SESSION['user']) && $_SESSION['user']['name']) : ?>
 
                     <div class="lot-item__state">
-                        <div class="lot-item__timer timer">
-                            <?= remaining($data['expire']); ?>
+                        <div class="lot-item__timer timer<?= $data['finishing']; ?>">
+                            <?= $data['expire']; ?>
                         </div>
                         <div class="lot-item__cost-state">
                             <div class="lot-item__rate">

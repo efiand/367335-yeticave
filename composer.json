@@ -1,0 +1,14 @@
+{
+    "name": "efiand/yeticave",
+    "description": "Yeticave shop site",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Andrey Efimov",
+            "email": "efiand@ya.ru"
+        }
+    ],
+    "require": {
+        "swiftmailer/swiftmailer": "^6.0"
+    }
+}
