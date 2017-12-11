@@ -25,7 +25,7 @@
                 <div class="preview">
                     <button class="preview__remove" type="button">x</button>
                     <div class="preview__img">
-                        <img src="img/avatar.jpg" width="113" height="113" alt="Ваш аватар">
+                        <img src="<?= $_SESSION['url'] ?? 'img/avatar.jpg'; ?>" width="113" height="113" alt="Ваш аватар">
                     </div>
                 </div>
                 <div class="form__input-file">
@@ -35,6 +35,7 @@
                     </label>
                 </div>
             </div>
+            <div class="form__item" style="color: #f84646"><?= $data['error']['img']; ?></div>
             <span class="form__error form__error--bottom"><?= $data['error_main']; ?></span>
             <button type="submit" class="button">Зарегистрироваться</button>
             <a class="text-link" href="login.php">Уже есть аккаунт</a>

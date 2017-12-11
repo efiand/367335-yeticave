@@ -27,7 +27,7 @@
                 <div class="preview">
                     <button class="preview__remove" type="button">x</button>
                     <div class="preview__img">
-                        <img src="img/avatar.jpg" width="113" height="113" alt="Изображение лота">
+                        <img src="<?= $_SESSION['url'] ?? 'img/avatar.jpg'; ?>" width="113" height="113" alt="Изображение лота">
                     </div>
                 </div>
                 <div class="form__input-file">

@@ -57,8 +57,8 @@ if (isset($data['lot-date']) && $data['lot-date']) {
 
 // сохранение файла
 require 'app/save_img.php';
-$add_data['uploaded'] = $uploaded_class;
 $add_data['error']['img'] = $file_error;
+$add_data['uploaded'] = $uploaded_class;
 
 // выбранная категория
 foreach ($categories_list as $k => $val) {

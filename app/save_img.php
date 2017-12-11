@@ -16,18 +16,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (mime_content_type($tmp) == 'image/png' || mime_content_type($tmp) == 'image/jpeg') {
             $_SESSION['url'] = 'img/' . $_FILES['file']['name'];
             copy($tmp, $_SESSION['url']);
+            $uploaded_class =  ' form__item--uploaded';
         }
         else {
-            $file_error = 'Выберите правильный формат (jpeg или png).';
+            $file_error = 'Выберите правильный формат изображения (jpeg или png).';
+            $error_count++;
         }
     }
-
-    // проверка при промежуточных исправлениях ошибок
-    if (! isset($_SESSION['url']) && ! isset($signup_data)) {
-        $file_error = $file_error ? $file_error : 'Загрузите изображение.';
-        $error_count ++;
-    }
-    else {
-        $uploaded_class =  ' form__item--uploaded';
+    // обязательность изображения для лота
+    else if ($_SERVER['SCRIPT_NAME'] === '/add.php') {
+        $file_error = 'Загрузите изображение лота.';
+        $error_count++;
     }
 }

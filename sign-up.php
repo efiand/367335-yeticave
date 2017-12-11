@@ -53,6 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $data['e-mail']) {
 
 // сохранение файла
 require 'app/save_img.php';
+$signup_data['error']['img'] = $file_error;
 $signup_data['uploaded'] = $uploaded_class;
 
 // обработка ошибок
@@ -80,7 +81,8 @@ else {
             $sql = str_replace(') VALUES (?, ?, ?, ?, ?)', ', img) VALUES (?, ?, ?, ?, ?, ?)', $sql);
             $query_data[] = $_SESSION['url'];
         }
-        $result = db_get_prepare_stmt($link, $sql, $query_data);
+        $stmt = db_get_prepare_stmt($link, $sql, $query_data);
+        $result = mysqli_stmt_execute($stmt);
         if (! $result) {
             $query_errors[] = 'Регистрация невозможна по техническим причинам.';
         }
