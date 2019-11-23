@@ -9,7 +9,7 @@
                 <div class="form__item<?= $data['category']['invalid']; ?>">
                     <label for="category">Категория</label>
                     <select id="category" name="category">
-                        <option value="">Выберите категорию</option><? foreach ($data['categories_list'] as $k => $val) : ?>
+                        <option value="">Выберите категорию</option><?php foreach ($data['categories_list'] as $k => $val) : ?>
 
                         <option value="<?= $k; ?>"<?= $data[$k . '-sel']; ?>><?= $val; ?></option><?php endforeach; ?>
 
