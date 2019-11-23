@@ -15,6 +15,7 @@ else {
 
 // настройки пагинации
 require 'app/paginator.php';
+
 // получаем список лотов
 $lots_query = 'SELECT id, name, price, expire_ts, img, category_id FROM lots '
 . 'WHERE expire_ts > ' . $time . ' LIMIT ' . $page_items . ' OFFSET ' . $offset;
