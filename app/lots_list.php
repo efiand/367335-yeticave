@@ -10,6 +10,7 @@
  */
 
 $lots_count = $lots_count ?? 0;
+$lots_list = [];
 if (! isset($lots_query)) {
     $lots_query = 'SELECT * FROM lots';
 }
