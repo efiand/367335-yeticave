@@ -3,6 +3,8 @@
 * Студент: [Андрей Ефимов](https://up.htmlacademy.ru/php/3/user/367335).
 * Наставник: [Сергей Зубов](https://htmlacademy.ru/profile/serj).
 
+[Опубликованная версия](https://yeticave.efiand.ru)
+
 ## Устанока
 
 ```
