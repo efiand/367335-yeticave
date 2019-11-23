@@ -1,5 +1,5 @@
 <?php
-$link = mysqli_connect('localhost', 'root', '', 'yeticave');
+$link = mysqli_connect('localhost', 'root', $_ENV['DB_PASS'] ?? '', 'yeticave');
 
 // при ошибке соединения
 if (! $link) {

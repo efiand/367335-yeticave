@@ -1,8 +1,29 @@
-# Личный проект «YetiCave» 
+# Личный проект «YetiCave»
 
 * Студент: [Андрей Ефимов](https://up.htmlacademy.ru/php/3/user/367335).
 * Наставник: [Сергей Зубов](https://htmlacademy.ru/profile/serj).
 
+## Устанока
+
+```
+composer install
+sudo mysql -u root -p
+  CREATE DATABASE yeticave;
+  USE yeticave;
+  GRANT all ON yeticave TO root IDENTIFIED BY '<YOUR_ROOT_PWD>';
+  FLUSH PRIVILEGES;
+  \q
+sudo mysql -u root -p yeticave < schema.sql
+sudo mysql -u root -p yeticave < queries.sql
+```
+
+На 2 уровня выше создается файл env.php:
+
+```php
+<?php
+
+$_ENV['DB_PASS'] = 'MY_DB_PASS';
+```
 
 ---
 

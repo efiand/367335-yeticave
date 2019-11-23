@@ -1,7 +1,10 @@
 <?php
 error_reporting(E_ALL);
 
-// Composer
+// конфиденциальные настройки окружения
+require '../../env.php';
+
+// сomposer
 require 'vendor/autoload.php';
 
 // подключаем библиотеку функций
