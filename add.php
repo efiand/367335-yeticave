@@ -4,6 +4,7 @@ require 'app/common.php';
 // запрет для незарегистрированных
 if (! isset($_SESSION['user'])) {
     http_response_code(403);
+    header('Location: /login.php');
     exit();
 }
 
