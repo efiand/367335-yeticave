@@ -16,7 +16,7 @@ sudo mysql -u root -p
   FLUSH PRIVILEGES;
   \q
 sudo mysql -u root -p yeticave < schema.sql
-sudo mysql -u root -p yeticave < queries.sql
+sudo mysql -u root -p yeticave < data.sql
 ```
 
 На 2 уровня выше создается файл env.php:
