@@ -15,8 +15,8 @@ $cur_page = $_GET['page'] ?? 1;
 $offset = ($cur_page - 1) * $page_items;
 
 if (isset($lots_count)) {
-    $pages_count = ceil($lots_count / $page_items);
-    if ($cur_page > $pages_count || ! $cur_page) {
+    $pages_count = $lots_count ? ceil($lots_count / $page_items) : 1;
+    if ($cur_page > $pages_count) {
         http_response_code(404);
         exit();
     }
