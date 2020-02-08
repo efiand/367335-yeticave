@@ -5,7 +5,7 @@
 
 [Опубликованная версия](https://yeticave.efiand.ru)
 
-## Устанока
+## Установка
 
 ```
 composer install
